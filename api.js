@@ -281,13 +281,17 @@
       }
     },
     follow: {
-      isFollowing      : [GENERATE_GET_APPEND_PARAM1_TO_URL, 'follow/'],
+      isFollowing      : function (userId, callback) {
+        return this.get('follow/' + userId, { skipQueue: true }, callback);
+      },
       fetchAll         : [GENERATE_GET, 'follow/all'],
       fetchAllFollowers: [GENERATE_GET, 'followers'],
       follow           : function (userId, callback) {
-        return this.post('follow', { userId: userId }, callback);
+        return this.post('follow', { userId: userId, skipQueue: true }, callback);
       },
-      unfollow: [GENERATE_GET_APPEND_PARAM1_TO_URL, 'unfollow/']
+      unfollow         : function (userId, callback) {
+        return this.get('unfollow/' + userId, { skipQueue: true }, callback);
+      }
     },
     payment: {
       getAssortiment: [GENERATE_GET_APPEND_PARAM1_TO_URL, 'payment/assortiment/'],
